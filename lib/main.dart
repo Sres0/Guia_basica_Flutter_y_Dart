@@ -1,3 +1,5 @@
+//INPUTS
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -25,88 +27,85 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _estadoElevado = false;
-  bool _estadoIcono = true;
-  int _elevado = 0;
-  int _icono = 0;
-  int _delineado = 0;
-  int _texto = 0;
-  int _flotante = 0;
-
-  void _presionarElevado() {
-    setState(() {
-      _estadoElevado = !_estadoElevado;
-      _elevado++;
-    });
-  }
-
-  void _presionarIcono() {
-    setState(() {
-      _estadoIcono = !_estadoIcono;
-      _icono++;
-    });
-  }
-
-  void _incrementarDelineado() {
-    setState(() => _delineado++);
-  }
-
-  void _incrementarTexto() {
-    setState(() => _texto++);
-  }
-
-  void _incrementarFlotante() {
-    setState(() => _flotante++);
-  }
+  final TextEditingController _formFieldController = TextEditingController();
+  final TextEditingController _textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: (_formFieldController.value.text.isEmpty)
+                      ? const Text('Acá aparecerá tu mensaje')
+                      : Row(
+                          children: [
+                            Flexible(
+                                child: Text(_formFieldController.value.text)),
+                          ],
+                        ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    onChanged: (value) => {setState(() => {})},
+                    controller: _formFieldController,
+                    minLines: 1,
+                    maxLines: 5,
+                    maxLength: 25,
+                    keyboardType: TextInputType.multiline,
+                    decoration: const InputDecoration(
+                      hintText: 'Escribe un mensaje en el Text Form Field',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: (_textFieldController.value.text.isEmpty)
+                      ? const Text('Acá aparecerá tu mensaje')
+                      : Row(
+                          children: [
+                            Flexible(
+                              child: Text(_textFieldController.value.text),
+                            ),
+                          ],
+                        ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _textFieldController,
+                    minLines: 1,
+                    maxLines: 5,
+                    keyboardType: TextInputType.multiline,
+                    decoration: const InputDecoration(
+                      hintText: 'Escribe un mensaje en el Text Field',
+                      // border: OutlineInputBorder(
+                      // borderRadius: BorderRadius.all(Radius.circular(30))),
+                    ),
+                  ),
+                ),
                 ElevatedButton(
-                  onPressed: _presionarElevado,
-                  child: Icon(_estadoElevado ? Icons.arrow_right : Icons.pause),
-                ),
-                IconButton(
-                  onPressed: _presionarIcono,
-                  icon: Icon(
-                      _estadoIcono ? Icons.favorite_border : Icons.favorite),
+                  onPressed: () => FocusScope.of(context).unfocus(),
+                  // onPressed: () => {setState(() => {})},
+                  child: const Text('Enviar'),
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                OutlinedButton(
-                  onPressed: _incrementarDelineado,
-                  child: const Text('Botón delineado'),
-                ),
-                TextButton(
-                  onPressed: _incrementarTexto,
-                  child: const Text('Botón de texto'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 50),
-            Text('Botón de elevado: $_elevado'),
-            Text('Botón de icono: $_icono'),
-            Text('Botón de delineado: $_delineado'),
-            Text('Botón de texto: $_texto'),
-            Text('Botón de flotante: $_flotante'),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementarFlotante,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
