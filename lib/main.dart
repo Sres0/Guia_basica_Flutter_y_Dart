@@ -1,6 +1,9 @@
-//INPUTS
+//NAVEGACION
 
 import 'package:flutter/material.dart';
+import 'paginas/home_page.dart';
+import 'paginas/favorite_page.dart';
+import 'paginas/profile_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'Botones'),
+      home: const MyHomePage(title: 'Barra de navegación'),
     );
   }
 }
@@ -27,85 +30,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController _formFieldController = TextEditingController();
-  final TextEditingController _textFieldController = TextEditingController();
+  int currentIndex = 0;
+  final screens = const [HomePage(), FavoritePage(), ProfilePage()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: (_formFieldController.value.text.isEmpty)
-                      ? const Text('Acá aparecerá tu mensaje')
-                      : Row(
-                          children: [
-                            Flexible(
-                                child: Text(_formFieldController.value.text)),
-                          ],
-                        ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    onChanged: (value) => {setState(() => {})},
-                    controller: _formFieldController,
-                    minLines: 1,
-                    maxLines: 5,
-                    maxLength: 25,
-                    keyboardType: TextInputType.multiline,
-                    decoration: const InputDecoration(
-                      hintText: 'Escribe un mensaje en el Text Form Field',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: (_textFieldController.value.text.isEmpty)
-                      ? const Text('Acá aparecerá tu mensaje')
-                      : Row(
-                          children: [
-                            Flexible(
-                              child: Text(_textFieldController.value.text),
-                            ),
-                          ],
-                        ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: _textFieldController,
-                    minLines: 1,
-                    maxLines: 5,
-                    keyboardType: TextInputType.multiline,
-                    decoration: const InputDecoration(
-                      hintText: 'Escribe un mensaje en el Text Field',
-                      // border: OutlineInputBorder(
-                      // borderRadius: BorderRadius.all(Radius.circular(30))),
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () => FocusScope.of(context).unfocus(),
-                  // onPressed: () => {setState(() => {})},
-                  child: const Text('Enviar'),
-                ),
-              ],
-            ),
-          ],
-        ),
+        child: screens[currentIndex],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        //SHIFTING
+        // type: BottomNavigationBarType.shifting,
+        //FIXED
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        //
+        currentIndex: currentIndex,
+        iconSize: 25,
+        showUnselectedLabels: false,
+        onTap: (index) => setState(() => currentIndex = index),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Inicio',
+            backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favoritos',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Perfil',
+            backgroundColor: Colors.grey,
+          ),
+        ],
       ),
     );
   }
