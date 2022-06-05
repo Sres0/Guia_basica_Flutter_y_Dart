@@ -1,7 +1,7 @@
-//NAVEGACION
-// ignore_for_file: unnecessary_string_escapes
+//Diseño
 
 import 'package:flutter/material.dart';
+import './constants/theme.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'Imágenes'),
+      theme: themeData(),
+      home: const MyHomePage(title: 'Temas'),
     );
   }
 }
@@ -30,88 +30,37 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    final _theme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Column(
-        children: [
-          Container(
-            color: Colors.blue,
-            height: MediaQuery.of(context).size.height *
-                0.6, //responsive, ocupa el 60% de la pantalla
-            width: MediaQuery.of(context).size.width,
-            child: SingleChildScrollView(
-                child: Column(
-              children: const [
-                FilaImagenes(tipoBoxFit: BoxFit.contain, tipoNombre: 'Contain'),
-                FilaImagenes(tipoBoxFit: BoxFit.cover, tipoNombre: 'Cover'),
-                FilaImagenes(tipoBoxFit: BoxFit.fill, tipoNombre: 'Fill'),
-                FilaImagenes(
-                    tipoBoxFit: BoxFit.fitHeight, tipoNombre: 'Fit height'),
-                FilaImagenes(
-                    tipoBoxFit: BoxFit.fitWidth, tipoNombre: 'Fit width'),
-                FilaImagenes(tipoBoxFit: BoxFit.none, tipoNombre: 'None'),
-                FilaImagenes(
-                    tipoBoxFit: BoxFit.scaleDown, tipoNombre: 'Scale down'),
-              ],
-            )),
+        appBar: AppBar(title: Text(widget.title)),
+        body: Center(
+          child: Padding(
             padding: const EdgeInsets.all(10),
-          ),
-          Flexible(
-            // responsive, ocupa el espacio restante
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Column(
               children: [
-                Container(
-                    //tamaño cambia
-                    padding: const EdgeInsets.all(10),
-                    color: Colors.white,
-                    child: Image.asset('assets/images/dart_logo_1.png')),
-                Container(
-                    height: 50, //tamaño constante
-                    padding: const EdgeInsets.all(10),
-                    color: Colors.white,
-                    child: const Image(
-                        image: AssetImage('assets/images/dart_logo_2.png'))),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text('Texto por defecto (body text 2)'),
+                      Text('Headline 6', style: _theme.headline6 as TextStyle),
+                      Text('Headline 5', style: _theme.headline5 as TextStyle),
+                      Text('Headline 4', style: _theme.headline4 as TextStyle),
+                      Text('Subtitle 1', style: _theme.subtitle1 as TextStyle),
+                      Text('Subtitle 2', style: _theme.subtitle2 as TextStyle),
+                      Text('Bodytext 1', style: _theme.bodyText1 as TextStyle),
+                      Text('Bodytext 2', style: _theme.bodyText2 as TextStyle),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(color: kPrimaryColorDark),
+                  flex: 1,
+                )
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class FilaImagenes extends StatelessWidget {
-  const FilaImagenes(
-      {Key? key, required this.tipoBoxFit, required this.tipoNombre})
-      : super(key: key);
-  final BoxFit tipoBoxFit;
-  final String tipoNombre;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          Container(
-              height: 100,
-              width: 150,
-              color: Colors.black,
-              child: Image.network(
-                  //forma 1 desde internet
-                  'https://www.kindpng.com/picc/m/355-3557482_flutter-logo-png-transparent-png.png',
-                  fit: tipoBoxFit)),
-          Container(
-              height: 150,
-              width: 100,
-              color: Colors.black,
-              child: Image(
-                  image: const NetworkImage(//forma 2 desde internet
-                      'https://www.kindpng.com/picc/m/355-3557482_flutter-logo-png-transparent-png.png'),
-                  fit: tipoBoxFit)),
-        ]),
-        SizedBox(child: Text(tipoNombre), height: 50)
-      ],
-    );
+        ));
   }
 }
