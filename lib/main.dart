@@ -27,10 +27,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String title = '';
   double _currentSliderValue = 1;
+  bool _currentSwitchState = false;
+  Color containerColor = Colors.white;
 
   String text = 'Sin sensación';
   Color color = Colors.green;
-  IconData emotionIcon = Icons.favorite;
+  IconData currentIcon = Icons.favorite;
 
   List<IconData> icons = [
     Icons.delete_forever_outlined,
@@ -72,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       text = sliderText;
       color = sliderColor;
-      emotionIcon = icon;
+      currentIcon = icon;
     });
   }
 
@@ -82,45 +84,61 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar,
-      body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        //SLIDER
-        Container(
-          padding: const EdgeInsets.all(10),
-          height: MediaQuery.of(context).size.height * 0.3,
-          child: Column(
-            children: [
-              Center(
-                  child: Text(
-                      'Slider: ${_currentSliderValue.toInt().toString()}',
-                      softWrap: true,
-                      overflow: TextOverflow.fade)),
-              Column(
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.95,
+        child: SingleChildScrollView(
+          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            //SLIDER
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
                 children: [
-                  Slider(
-                    activeColor: color,
-                    inactiveColor: Colors.grey,
-                    value: _currentSliderValue,
-                    min: 1,
-                    max: 5,
-                    divisions: 4,
-                    label: _currentSliderValue.round().toString(),
-                    onChanged: (double value) {
-                      setState(() {
-                        _currentSliderValue = value;
-                        changeTextAndColor(value);
-                      });
-                    },
+                  Column(
+                    children: [
+                      Center(
+                          child: Text(
+                              'Slider: ${_currentSliderValue.toInt().toString()}',
+                              softWrap: true,
+                              overflow: TextOverflow.fade)),
+                      Slider(
+                        activeColor: color,
+                        inactiveColor: Colors.grey,
+                        value: _currentSliderValue,
+                        min: 1,
+                        max: 5,
+                        divisions: 4,
+                        label: _currentSliderValue.round().toString(),
+                        onChanged: (double value) {
+                          setState(() {
+                            _currentSliderValue = value;
+                            changeTextAndColor(value);
+                          });
+                        },
+                      ),
+                      Row(children: [
+                        Text(text, style: TextStyle(color: color)),
+                        Icon(currentIcon, color: color)
+                      ], mainAxisAlignment: MainAxisAlignment.spaceEvenly),
+                    ],
                   ),
-                  Row(children: [
-                    Text(text, style: TextStyle(color: color)),
-                    Icon(emotionIcon, color: color)
-                  ], mainAxisAlignment: MainAxisAlignment.spaceEvenly),
                 ],
               ),
-            ],
-          ),
+            ),
+            //SWITCH
+            Container(
+                padding: const EdgeInsets.all(10),
+                color: _currentSwitchState ? Colors.white : Colors.black54,
+                height: 100,
+                child: Center(
+                    child: Switch(
+                  value: _currentSwitchState,
+                  onChanged: (value) => setState(() {
+                    _currentSwitchState = value;
+                  }),
+                )))
+          ]),
         ),
-      ]),
+      ),
     );
   }
 }
