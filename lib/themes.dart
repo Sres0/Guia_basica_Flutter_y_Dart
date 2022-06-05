@@ -1,4 +1,4 @@
-//Diseño
+//Themes
 
 import 'package:flutter/material.dart';
 import './constants/theme.dart';
