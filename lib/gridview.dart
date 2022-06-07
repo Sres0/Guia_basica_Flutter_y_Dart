@@ -25,8 +25,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final screens = const [];
-
   @override
   Widget build(BuildContext context) {
     final icons = [
