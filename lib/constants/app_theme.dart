@@ -13,11 +13,9 @@ ThemeData themeData() {
       headline5: _textStyle.copyWith(color: kPrimaryColorLight),
       headline4: _textStyle.copyWith(fontSize: 18),
       headline3: _textStyle.copyWith(fontSize: 24),
-      subtitle1: _textStyle.copyWith(
-          fontWeight: FontWeight.bold, color: kPrimaryColorLight),
+      subtitle1: _textStyle.copyWith(fontWeight: FontWeight.bold),
       subtitle2: _textStyle,
-      bodyText1: _textStyle.copyWith(
-          fontWeight: FontWeight.bold, color: kPrimaryColorLight),
+      bodyText1: _textStyle.copyWith(fontWeight: FontWeight.bold),
       bodyText2: _textStyle);
 
   return ThemeData(
@@ -28,6 +26,7 @@ ThemeData themeData() {
     primaryColorDark: kPrimaryColorDark,
     textTheme: _textTheme,
     iconTheme: IconThemeData(color: kPrimaryColorDark),
+    buttonTheme: ButtonThemeData(buttonColor: kPrimaryColorLight),
     appBarTheme: AppBarTheme(
       color: kPrimaryColorLight,
       elevation: 0,
