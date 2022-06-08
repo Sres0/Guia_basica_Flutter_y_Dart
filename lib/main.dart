@@ -1,9 +1,8 @@
 //APP INTEGRADORA
 
 import 'package:flutter/material.dart';
-import 'paginas/home_screen.dart';
-import 'paginas/favorite_page.dart';
-import 'paginas/profile_page.dart';
+import 'package:proyecto3_1/paginas/profile_page.dart';
+import 'paginas/pagina_habitos.dart';
 import './constants/app_theme.dart';
 
 void main() => runApp(const MyApp());
@@ -28,11 +27,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int currentIndex = 0;
-  final screens = [
-    const HomeScreen(),
-    const FavoritePage(),
-    const ProfilePage()
-  ];
+  final screens = [const PaginaHabitos(), const ProfilePage()];
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
         showUnselectedLabels: false,
         onTap: (index) => setState(() => currentIndex = index),
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favoritos'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
+              icon: Icon(Icons.check_circle_outline), label: 'Hábitos'),
+          BottomNavigationBarItem(icon: Icon(Icons.edit), label: 'Notas')
         ],
       ),
     );
