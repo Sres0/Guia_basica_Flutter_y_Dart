@@ -20,59 +20,57 @@ class _PaginaNotasState extends State<PaginaNotas> {
         backgroundColor: _bgColor,
         body: Padding(
             padding: const EdgeInsets.all(10),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      selectionHeightStyle: BoxHeightStyle.max,
-                      style: TextStyle(
+            child: SingleChildScrollView(
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    selectionHeightStyle: BoxHeightStyle.max,
+                    style: TextStyle(
+                        color:
+                            _isDark ? kPrimaryColorDark : kPrimaryColorLight),
+                    controller: _textFieldController,
+                    minLines: 1,
+                    maxLines: 40,
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                      enabledBorder: InputBorder.none,
+                      hintStyle: TextStyle(
                           color:
                               _isDark ? kPrimaryColorDark : kPrimaryColorLight),
-                      controller: _textFieldController,
-                      minLines: 1,
-                      maxLines: 5,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        hintStyle: TextStyle(
-                            color: _isDark
-                                ? kPrimaryColorDark
-                                : kPrimaryColorLight),
-                        hintText:
-                            'Escribe notas aleatorias que se perderán en el multiverso digital',
-                      ),
+                      hintText:
+                          'Escribe notas aleatorias que se perderán en el multiverso digital',
                     ),
                   ),
-                  ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(primary: kPrimaryColorLight),
-                    onPressed: () => FocusScope.of(context).unfocus(),
-                    child: const Text('Listo!'),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: kPrimaryColorLight),
+                  onPressed: () => FocusScope.of(context).unfocus(),
+                  child: const Text('Listo!'),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Switch(
+                          activeColor: kPrimaryColorDark,
+                          inactiveThumbColor: kPrimaryColorLight,
+                          inactiveTrackColor: kPrimaryColorLight,
+                          value: _isDark,
+                          onChanged: (value) => setState(() {
+                                _isDark = value;
+                              })),
+                      colorearFondo(Colors.blue),
+                      colorearFondo(Colors.orange),
+                      colorearFondo(Colors.green),
+                      colorearFondo(kSecondaryColorDark),
+                      colorearFondo(kPrimaryColorLight),
+                    ],
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Switch(
-                            activeColor: kPrimaryColorDark,
-                            inactiveThumbColor: kPrimaryColorLight,
-                            inactiveTrackColor: kPrimaryColorLight,
-                            value: _isDark,
-                            onChanged: (value) => setState(() {
-                                  _isDark = value;
-                                })),
-                        colorearFondo(Colors.blue),
-                        colorearFondo(Colors.orange),
-                        colorearFondo(Colors.green),
-                        colorearFondo(kSecondaryColorDark),
-                        colorearFondo(kPrimaryColorLight),
-                      ],
-                    ),
-                  ),
-                ])));
+                ),
+              ]),
+            )));
   }
 
   SizedBox colorearFondo(Color color) {
