@@ -1,4 +1,4 @@
-# proyecto3_1
+# Guía básica de Flutter y Dart
 
 A new Flutter project.
 
